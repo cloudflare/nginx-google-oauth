@@ -186,7 +186,9 @@ to the ip of your docker daemon, we use `ngo.lol` here. Make sure to add
 Docker image has the following env variables for configuration:
 
 * `DEBUG`: if set, prints the generated nginx configuation on container start
-* `LOCATIONS` can contain `location` directives that will be injected into the nginx configuration on container start. If not set, a demo page is served under `location / {...}`
+* `LOCATIONS` can contain `location` directives that will be injected into the
+  nginx configuration on container start. If not set, a demo page is served
+  under `location / {...}`
 * `NGO_BLACKLIST` is the value of `$ngo_blacklist`.
 * `NGO_CALLBACK_HOST` is the value of `$ngo_callback_host`.
 * `NGO_CALLBACK_SCHEME` is the value of `$ngo_callback_scheme`.

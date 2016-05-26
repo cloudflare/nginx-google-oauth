@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh -e
 
 PORT=${PORT:-80}
 
@@ -43,19 +43,19 @@ ${LOCATIONS}" > /tmp/nginx-locations.conf
 fi
 
 # Write config file
-sed "s/%NGO_BLACKLIST%/${BLACKLIST}/"                      -i /etc/nginx/sites-available/default && \
-  sed "s/%NGO_CALLBACK_HOST%/${NGO_CALLBACK_HOST-\$host}/" -i /etc/nginx/sites-available/default && \
-  sed "s/%NGO_CALLBACK_SCHEME%/${NGO_CALLBACK_SCHEME}/"    -i /etc/nginx/sites-available/default && \
-  sed "s|%NGO_CALLBACK_URI%|${NGO_CALLBACK_URI}|"          -i /etc/nginx/sites-available/default && \
-  sed "s/%NGO_CLIENT_ID%/${NGO_CLIENT_ID}/"                -i /etc/nginx/sites-available/default && \
-  sed "s/%NGO_CLIENT_SECRET%/${NGO_CLIENT_SECRET}/"        -i /etc/nginx/sites-available/default && \
-  sed "s/%NGO_DOMAIN%/${NGO_DOMAIN}/"                      -i /etc/nginx/sites-available/default && \
-  sed "s/%NGO_EMAIL_AS_USER%/${NGO_EMAIL_AS_USER}/"        -i /etc/nginx/sites-available/default && \
-  sed "s/%NGO_EXTRA_VALIDITY%/${NGO_EXTRA_VALIDITY}/"      -i /etc/nginx/sites-available/default && \
-  sed "s/%NGO_SECURE_COOKIES%/${NGO_SECURE_COOKIES}/"      -i /etc/nginx/sites-available/default && \
-  sed "s/%NGO_TOKEN_SECRET%/${NGO_TOKEN_SECRET}/"          -i /etc/nginx/sites-available/default && \
-  sed "s/%NGO_USER%/${NGO_USER}/"                          -i /etc/nginx/sites-available/default && \
-  sed "s/%NGO_WHITELIST%/${NGO_WHITELIST}/"                -i /etc/nginx/sites-available/default
+sed "s/%NGO_BLACKLIST%/${BLACKLIST}/"                      -i /etc/nginx/sites-available/default
+sed "s/%NGO_CALLBACK_HOST%/${NGO_CALLBACK_HOST-\$host}/" -i /etc/nginx/sites-available/default
+sed "s/%NGO_CALLBACK_SCHEME%/${NGO_CALLBACK_SCHEME}/"    -i /etc/nginx/sites-available/default
+sed "s|%NGO_CALLBACK_URI%|${NGO_CALLBACK_URI}|"          -i /etc/nginx/sites-available/default
+sed "s/%NGO_CLIENT_ID%/${NGO_CLIENT_ID}/"                -i /etc/nginx/sites-available/default
+sed "s/%NGO_CLIENT_SECRET%/${NGO_CLIENT_SECRET}/"        -i /etc/nginx/sites-available/default
+sed "s/%NGO_DOMAIN%/${NGO_DOMAIN}/"                      -i /etc/nginx/sites-available/default
+sed "s/%NGO_EMAIL_AS_USER%/${NGO_EMAIL_AS_USER}/"        -i /etc/nginx/sites-available/default
+sed "s/%NGO_EXTRA_VALIDITY%/${NGO_EXTRA_VALIDITY}/"      -i /etc/nginx/sites-available/default
+sed "s/%NGO_SECURE_COOKIES%/${NGO_SECURE_COOKIES}/"      -i /etc/nginx/sites-available/default
+sed "s/%NGO_TOKEN_SECRET%/${NGO_TOKEN_SECRET}/"          -i /etc/nginx/sites-available/default
+sed "s/%NGO_USER%/${NGO_USER}/"                          -i /etc/nginx/sites-available/default
+sed "s/%NGO_WHITELIST%/${NGO_WHITELIST}/"                -i /etc/nginx/sites-available/default
 
 
 # Help people spot problems
