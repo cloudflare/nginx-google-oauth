@@ -176,7 +176,7 @@ this includes:
 
 You have to [obtain tokens](#Configuring OAuth access) first.
 
-There is a pre-build image: `cloudflare/nginx-google-oauth`. If you are
+There is a pre-built image: `cloudflare/nginx-google-oauth`. If you are
 hacking on this project, you might want to rebuild the image yourself.
 
 To make it work locally, add a record to DNS or to `/etc/hosts`, pointing
@@ -185,17 +185,31 @@ to the ip of your docker daemon, we use `ngo.lol` here. Make sure to add
 
 Docker image has the following env variables for configuration:
 
-* `PORT` is the port for nginx to listen on, defaults to `80`.
+* `DEBUG`: if set, prints the generated nginx configuation on container start
+* `LOCATIONS` can contain `location` directives that will be injected into the
+  nginx configuration on container start. If not set, a demo page is served
+  under `location / {...}`
+* `NGO_BLACKLIST` is the value of `$ngo_blacklist`.
+* `NGO_CALLBACK_HOST` is the value of `$ngo_callback_host`.
+* `NGO_CALLBACK_SCHEME` is the value of `$ngo_callback_scheme`.
+* `NGO_CALLBACK_SCHEME` is the value of `$ngo_callback_scheme`, required.
+* `NGO_CALLBACK_URI` is the value of `$ngo_callback_uri`.
 * `NGO_CLIENT_ID` is the value of `$ngo_client_id`, required.
 * `NGO_CLIENT_SECRET` is the value of `$ngo_client_secret`, required.
-* `NGO_TOKEN_SECRET` is the value of `$ngo_token_secret`, required.
-* `NGO_CALLBACK_SCHEME` is the value of `$ngo_callback_scheme`, required.
+* `NGO_DOMAIN` is the value of `$ngo_domain`.
+* `NGO_EMAIL_AS_USER` is the value of `$ngo_email_as_user`
 * `NGO_EXTRA_VALIDITY` is the value of `$ngo_extra_validity`, required.
+* `NGO_SECURE_COOKIES` is the value of `$ngo_secure_cookies`
+* `NGO_TOKEN_SECRET` is the value of `$ngo_token_secret`, required.
+* `NGO_USER` is the value of `$ngo_user`.
+* `NGO_WHITELIST` is the value of `$ngo_whitelist`.
+* `PORT` is the port for nginx to listen on, defaults to `80`.
 
 Run the image:
 
 ```
 docker run --rm -it --net host \
+  -e DEBUG=1 \
   -e NGO_CALLBACK_SCHEME=http \
   -e NGO_CLIENT_ID="client id from google" \
   -e NGO_CLIENT_SECRET="client secret from google" \
