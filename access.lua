@@ -61,10 +61,12 @@ end
 local function on_auth(email, token, expires)
   local oauth_domain = email:match("[^@]+@(.+)")
 
-  if not whitelist and not blacklist and domain then
-    if oauth_domain ~= domain then
-      ngx.log(ngx.ERR, email .. " is not on " .. domain)
-      return ngx.exit(ngx.HTTP_FORBIDDEN)
+  if not (whitelist or blacklist) then
+    if domain:len() ~= 0 then
+      if oauth_domain ~= domain then
+        ngx.log(ngx.ERR, email .. " is not on " .. domain)
+        return ngx.exit(ngx.HTTP_FORBIDDEN)
+      end
     end
   end
 
