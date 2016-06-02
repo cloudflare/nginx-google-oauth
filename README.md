@@ -26,12 +26,12 @@ server {
 
   listen 443 ssl;
 
-  ssl_certificate /etc/nginx/certs/supersecret.net.pem;
+  ssl_certificate     /etc/nginx/certs/supersecret.net.pem;
   ssl_certificate_key /etc/nginx/certs/supersecret.net.key;
 
-  set $ngo_client_id "abc-def.apps.googleusercontent.com";
-  set $ngo_client_secret "abcdefg-123-xyz";
-  set $ngo_token_secret "a very long randomish string";
+  set $ngo_client_id      "abc-def.apps.googleusercontent.com";
+  set $ngo_client_secret  "abcdefg-123-xyz";
+  set $ngo_token_secret   "a very long randomish string";
   set $ngo_secure_cookies "true";
 
   access_by_lua_file "/etc/nginx/lua/nginx-google-oauth/access.lua";
@@ -41,23 +41,23 @@ server {
 The access controls can be configured using nginx variables. The supported
 variables are:
 
+- **$ngo_callback_host** The host for the callback, defaults to first entry
+  in the ``server_name`` list (e.g `supersecret.net`).
+- **$ngo_callback_scheme** The scheme for the callback URL,
+  defaults to that of the request (e.g. `https`).
+- **$ngo_callback_uri** The URI for the callback, defaults to `/_oauth`.
+- **$ngo_ngo_signout_uri** The URI for sign-out endpoint.
 - **$ngo_client_id** This is the client id key.
 - **$ngo_client_secret** This is the client secret.
 - **$ngo_token_secret** The key used to encrypt the session token stored
-  in the user cookie.  Should be long & unguessable.
-- **$ngo_domain** The domain to use for validating users when not using
-  white- or blacklists.
-- **$ngo_callback_scheme** The scheme for the callback URL,
-  defaults to that of the request (e.g. `https`).
-- **$ngo_callback_host** The host for the callback, defaults to first entry
-  in the ``server_name`` list (e.g `supersecret.net`).
-- **$ngo_callback_uri** The URI for the callback, defaults to `/_oauth`.
-- **$ngo_ngo_signout_uri** The URI for sign-out endpoint.
-- **$ngo_extra_validity** Time in seconds to add to token validity period.
-- **$ngo_whitelist** Optional list of authorized email addresses.
-- **$ngo_blacklist** Optional list of unauthorized email addresses.
+  in the user cookie. Should be long & unguessable.
 - **$ngo_secure_cookies** If defined, will ensure that cookies can only
   be transferred over a secure connection.
+- **$ngo_extra_validity** Time in seconds to add to token validity period.
+- **$ngo_domain** The domain to use for validating users when not using
+  white- or blacklists.
+- **$ngo_whitelist** Optional list of authorized email addresses.
+- **$ngo_blacklist** Optional list of unauthorized email addresses.
 - **$ngo_user** If set, will be populated with the OAuth username
   returned from Google (portion left of '@' in email).
 - **$ngo_email_as_user** If set and `$ngo_user` is defined, username
@@ -185,25 +185,25 @@ to the ip of your docker daemon, we use `ngo.lol` here. Make sure to add
 
 Docker image has the following env variables for configuration:
 
+* `NGO_CALLBACK_HOST` is the value of `$ngo_callback_host`.
+* `NGO_CALLBACK_SCHEME` is the value of `$ngo_callback_scheme`.
+* `NGO_CALLBACK_URI` is the value of `$ngo_callback_uri`.
+* `NGO_SIGNOUT_URI` is the value of `$ngo_signout_uri`.
+* `NGO_CLIENT_ID` is the value of `$ngo_client_id`, required.
+* `NGO_CLIENT_SECRET` is the value of `$ngo_client_secret`, required.
+* `NGO_TOKEN_SECRET` is the value of `$ngo_token_secret`, required.
+* `NGO_SECURE_COOKIES` is the value of `$ngo_secure_cookies`.
+* `NGO_EXTRA_VALIDITY` is the value of `$ngo_extra_validity`.
+* `NGO_DOMAIN` is the value of `$ngo_domain`.
+* `NGO_WHITELIST` is the value of `$ngo_whitelist`.
+* `NGO_BLACKLIST` is the value of `$ngo_blacklist`.
+* `NGO_USER` is the value of `$ngo_user`.
+* `NGO_EMAIL_AS_USER` is the value of `$ngo_email_as_user`.
+* `PORT` is the port for nginx to listen on, defaults to `80`.
 * `DEBUG`: if set, prints the generated nginx configuation on container start
 * `LOCATIONS` can contain `location` directives that will be injected into the
   nginx configuration on container start. If not set, a demo page is served
-  under `location / {...}`
-* `NGO_BLACKLIST` is the value of `$ngo_blacklist`.
-* `NGO_CALLBACK_HOST` is the value of `$ngo_callback_host`.
-* `NGO_CALLBACK_SCHEME` is the value of `$ngo_callback_scheme`.
-* `NGO_CALLBACK_SCHEME` is the value of `$ngo_callback_scheme`, required.
-* `NGO_CALLBACK_URI` is the value of `$ngo_callback_uri`.
-* `NGO_CLIENT_ID` is the value of `$ngo_client_id`, required.
-* `NGO_CLIENT_SECRET` is the value of `$ngo_client_secret`, required.
-* `NGO_DOMAIN` is the value of `$ngo_domain`.
-* `NGO_EMAIL_AS_USER` is the value of `$ngo_email_as_user`
-* `NGO_EXTRA_VALIDITY` is the value of `$ngo_extra_validity`, required.
-* `NGO_SECURE_COOKIES` is the value of `$ngo_secure_cookies`
-* `NGO_TOKEN_SECRET` is the value of `$ngo_token_secret`, required.
-* `NGO_USER` is the value of `$ngo_user`.
-* `NGO_WHITELIST` is the value of `$ngo_whitelist`.
-* `PORT` is the port for nginx to listen on, defaults to `80`.
+  under `location / {...}`.
 
 Run the image:
 
@@ -214,7 +214,7 @@ docker run --rm -it --net host \
   -e NGO_CLIENT_ID="client id from google" \
   -e NGO_CLIENT_SECRET="client secret from google" \
   -e NGO_TOKEN_SECRET="random token secret" \
-  cloudflare/nginx-google-oauth:1.0
+  cloudflare/nginx-google-oauth:1.1
 ```
 
 Then open your browser at http://ngo.lol and you should get Google OAuth screen.
