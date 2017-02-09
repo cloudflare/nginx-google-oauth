@@ -3,7 +3,7 @@
 Lua module to add Google OAuth to nginx. It is based on great work
 from [Agora Games](https://github.com/agoragames/nginx-google-oauth).
 
-Fast forward to the [docker image](#Docker image) section to try it out.
+Fast forward to the [docker image](#docker-image) section to try it out.
 
 ## Installation
 
