@@ -30,7 +30,6 @@ server {
     set_by_lua $ngo_token_secret    'return os.getenv("NGO_TOKEN_SECRET")';
     set_by_lua $ngo_secure_cookies  'return os.getenv("NGO_SECURE_COOKIES")';
     set_by_lua $ngo_extra_validity  'return os.getenv("NGO_EXTRA_VALIDITY")';
-    set_by_lua $ngo_extra_validity  'return os.getenv("NGO_EXTRA_VALIDITY")';
     set_by_lua $ngo_domain          'return os.getenv("NGO_DOMAIN")';
     set_by_lua $ngo_whitelist       'return os.getenv("NGO_WHITELIST")';
     set_by_lua $ngo_blacklist       'return os.getenv("NGO_BLACKLIST")';
