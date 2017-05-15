@@ -6,7 +6,7 @@ lua_package_path '/etc/nginx/lua/?.lua;';
 server {
     listen %port%;
 
-    resolver 8.8.8.8 ipv6=off;
+    resolver %resolver% ipv6=off;
 
     lua_ssl_trusted_certificate /etc/ssl/certs/ca-certificates.crt;
     lua_ssl_verify_depth        5;

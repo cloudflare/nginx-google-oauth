@@ -1,3 +1,6 @@
+# TODO
+- [ ] Update docs to reflect how to use it after modification
+
 # nginx-google-oauth
 
 Lua module to add Google OAuth to nginx. It is based on great work

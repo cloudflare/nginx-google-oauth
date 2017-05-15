@@ -1,8 +1,14 @@
 #!/bin/sh -e
 
 PORT=${PORT:-80}
+RESOLVER=${RESOLVER:-8.8.8.8}
+NGO_SERVER_NAME=${NGO_SERVER_NAME}
+NGO_SERVER_PORT=${NGO_SERVER_PORT}
 
 sed "s/%port%/${PORT}/" -i /etc/nginx/sites-available/default
+sed "s/%resolver%/${RESOLVER}/" -i /etc/nginx/sites-available/default
+sed "s/%server_name%/${NGO_SERVER_NAME}/" -i /etc/nginx/snippets/demo-locations.conf
+sed "s/%server_port%/${NGO_SERVER_PORT}/" -i /etc/nginx/snippets/demo-locations.conf
 
 if [ -z "${NGO_CLIENT_ID}" ]; then
   echo "NGO_CLIENT_ID is not set"
