@@ -22,6 +22,7 @@ local extra_validity = tonumber(ngx.var.ngo_extra_validity or "0")
 local whitelist      = ngx.var.ngo_whitelist or ""
 local blacklist      = ngx.var.ngo_blacklist or ""
 local secure_cookies = ngx.var.ngo_secure_cookies == "true" or false
+local http_only_cookies = ngx.var.ngo_http_only_cookies == "true" or false
 local set_user       = ngx.var.ngo_user or false
 local email_as_user  = ngx.var.ngo_email_as_user == "true" or false
 
@@ -213,6 +214,9 @@ local function authorize()
   local cookie_tail  = ";version=1;path=/;Max-Age=" .. expires
   if secure_cookies then
     cookie_tail = cookie_tail .. ";secure"
+  end
+  if http_only_cookies then
+    cookie_tail = cookie_tail .. ";httponly"
   end
 
   local email      = profile["email"]
