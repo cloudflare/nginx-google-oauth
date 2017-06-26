@@ -33,6 +33,7 @@ server {
   set $ngo_client_secret  "abcdefg-123-xyz";
   set $ngo_token_secret   "a very long randomish string";
   set $ngo_secure_cookies "true";
+  set $ngo_whitelist_ip   "127.0.0.1 192.168.12.34";
 
   access_by_lua_file "/etc/nginx/lua/nginx-google-oauth/access.lua";
 }
