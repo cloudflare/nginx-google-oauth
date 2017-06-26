@@ -256,9 +256,7 @@ end
 
 handle_signout()
 
-is_whitelisted()
 is_blacklisted()
-
-if not is_authorized() then
+if not is_authorized() and not is_whitelisted() then
   authorize()
 end
