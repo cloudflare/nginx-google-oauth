@@ -56,8 +56,10 @@ variables are:
 - **$ngo_extra_validity** Time in seconds to add to token validity period.
 - **$ngo_domain** The domain to use for validating users when not using
   white- or blacklists.
-- **$ngo_whitelist** Optional list of authorized email addresses.
-- **$ngo_blacklist** Optional list of unauthorized email addresses.
+- **$ngo_whitelist** Optional space separated list of authorized email addresses.
+- **$ngo_blacklist** Optional space separated list of unauthorized email addresses.
+- **$ngo_whitelist_ip** Optional space separated list of authorized IPs (CIDR not supported yet).
+- **$ngo_blacklist_ip** Optional space separated list of unauthorized IPs (CIDR not supported yet).
 - **$ngo_user** If set, will be populated with the OAuth username
   returned from Google (portion left of '@' in email).
 - **$ngo_email_as_user** If set and `$ngo_user` is defined, username
@@ -197,6 +199,8 @@ Docker image has the following env variables for configuration:
 * `NGO_DOMAIN` is the value of `$ngo_domain`.
 * `NGO_WHITELIST` is the value of `$ngo_whitelist`.
 * `NGO_BLACKLIST` is the value of `$ngo_blacklist`.
+* `NGO_WHITELIST_IP` is the value of `$ngo_whitelist_ip`.
+* `NGO_BLACKLIST_IP` is the value of `$ngo_blacklist_ip`.
 * `NGO_USER` is the value of `$ngo_user`.
 * `NGO_EMAIL_AS_USER` is the value of `$ngo_email_as_user`.
 * `PORT` is the port for nginx to listen on, defaults to `80`.
