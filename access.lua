@@ -239,7 +239,7 @@ local function handle_signout()
 end
 
 local function is_whitelisted()
-  # TODO: support CIDR
+  -- TODO: support CIDR
   if string.find(" " .. whitelist_ip .. " ", " " .. ngx.var.remote_addr .. " ") then
     ngx.log(ngx.ERR, ngx.var.remote_addr .. " whitelisted")
     return true
@@ -247,7 +247,7 @@ local function is_whitelisted()
 end
 
 local function is_blacklisted()
-  # TODO: support CIDR
+  -- TODO: support CIDR
   if string.find(" " .. blacklist_ip .. " ", " " .. ngx.var.remote_addr .. " ") then
     ngx.log(ngx.ERR, ngx.var.remote_addr .. " blacklisted")
     return ngx.exit(ngx.HTTP_FORBIDDEN)
