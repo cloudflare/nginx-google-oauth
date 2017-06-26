@@ -241,7 +241,7 @@ end
 local function is_whitelisted()
   -- TODO: support CIDR
   if string.find(" " .. whitelist_ip .. " ", " " .. ngx.var.remote_addr .. " ") then
-    ngx.log(ngx.ERR, ngx.var.remote_addr .. " whitelisted")
+    -- ngx.log(ngx.ERR, ngx.var.remote_addr .. " oauth whitelisted")
     return true
   end
 end
@@ -249,7 +249,7 @@ end
 local function is_blacklisted()
   -- TODO: support CIDR
   if string.find(" " .. blacklist_ip .. " ", " " .. ngx.var.remote_addr .. " ") then
-    ngx.log(ngx.ERR, ngx.var.remote_addr .. " blacklisted")
+    ngx.log(ngx.ERR, ngx.var.remote_addr .. " oauth blacklisted")
     return ngx.exit(ngx.HTTP_FORBIDDEN)
   end
 end
