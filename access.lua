@@ -21,6 +21,8 @@ local signout_uri    = ngx.var.ngo_signout_uri or "/_signout"
 local extra_validity = tonumber(ngx.var.ngo_extra_validity or "0")
 local whitelist      = ngx.var.ngo_whitelist or ""
 local blacklist      = ngx.var.ngo_blacklist or ""
+local whitelist_ip   = ngx.var.ngo_whitelist_ip or ""
+local blacklist_ip   = ngx.var.ngo_blacklist_ip or ""
 local secure_cookies = ngx.var.ngo_secure_cookies == "true" or false
 local set_user       = ngx.var.ngo_user or false
 local email_as_user  = ngx.var.ngo_email_as_user == "true" or false
@@ -236,8 +238,25 @@ local function handle_signout()
   end
 end
 
+local function is_whitelisted()
+  -- TODO: support CIDR
+  if string.find(" " .. whitelist_ip .. " ", " " .. ngx.var.remote_addr .. " ") then
+    -- ngx.log(ngx.ERR, ngx.var.remote_addr .. " oauth whitelisted")
+    return true
+  end
+end
+
+local function is_blacklisted()
+  -- TODO: support CIDR
+  if string.find(" " .. blacklist_ip .. " ", " " .. ngx.var.remote_addr .. " ") then
+    ngx.log(ngx.ERR, ngx.var.remote_addr .. " oauth blacklisted")
+    return ngx.exit(ngx.HTTP_FORBIDDEN)
+  end
+end
+
 handle_signout()
 
-if not is_authorized() then
+is_blacklisted()
+if not is_authorized() and not is_whitelisted() then
   authorize()
 end
