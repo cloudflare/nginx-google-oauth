@@ -33,6 +33,8 @@ server {
     set_by_lua $ngo_domain          'return os.getenv("NGO_DOMAIN")';
     set_by_lua $ngo_whitelist       'return os.getenv("NGO_WHITELIST")';
     set_by_lua $ngo_blacklist       'return os.getenv("NGO_BLACKLIST")';
+    set_by_lua $ngo_whitelist_ip    'return os.getenv("NGO_WHITELIST_IP")';
+    set_by_lua $ngo_blacklist_ip    'return os.getenv("NGO_BLACKLIST_IP")';
     set_by_lua $ngo_user            'return os.getenv("NGO_USER")';
     set_by_lua $ngo_email_as_user   'return os.getenv("NGO_EMAIL_AS_USER")';
 
