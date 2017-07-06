@@ -55,8 +55,8 @@ variables are:
 - **$ngo_secure_cookies** If defined, will ensure that cookies can only
   be transferred over a secure connection.
 - **$ngo_extra_validity** Time in seconds to add to token validity period.
-- **$ngo_domain** The domain to use for validating users when not using
-  white- or blacklists.
+- **$ngo_domain** The space separated list of domains to use for validating users when not using
+  white- or blacklists. The first one will be the primary domain used by google to select the correct user.
 - **$ngo_whitelist** Optional space separated list of authorized email addresses.
 - **$ngo_blacklist** Optional space separated list of unauthorized email addresses.
 - **$ngo_whitelist_ip** Optional space separated list of authorized IPs (CIDR not supported yet).
