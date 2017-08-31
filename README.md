@@ -29,10 +29,11 @@ server {
   ssl_certificate     /etc/nginx/certs/supersecret.net.pem;
   ssl_certificate_key /etc/nginx/certs/supersecret.net.key;
 
-  set $ngo_client_id      "abc-def.apps.googleusercontent.com";
-  set $ngo_client_secret  "abcdefg-123-xyz";
-  set $ngo_token_secret   "a very long randomish string";
-  set $ngo_secure_cookies "true";
+  set $ngo_client_id         "abc-def.apps.googleusercontent.com";
+  set $ngo_client_secret     "abcdefg-123-xyz";
+  set $ngo_token_secret      "a very long randomish string";
+  set $ngo_secure_cookies    "true";
+  set $ngo_http_only_cookies "true";
 
   access_by_lua_file "/etc/nginx/lua/nginx-google-oauth/access.lua";
 }
@@ -53,6 +54,8 @@ variables are:
   in the user cookie. Should be long & unguessable.
 - **$ngo_secure_cookies** If defined, will ensure that cookies can only
   be transferred over a secure connection.
+- **$ngo_http_only_cookies** If defined, will ensure that cookies cannot
+  be accessed via javascript.
 - **$ngo_extra_validity** Time in seconds to add to token validity period.
 - **$ngo_domain** The space separated list of domains to use for validating
    users when not using white- or blacklists.
@@ -222,6 +225,7 @@ Docker image has the following env variables for configuration:
 * `NGO_CLIENT_SECRET` is the value of `$ngo_client_secret`, required.
 * `NGO_TOKEN_SECRET` is the value of `$ngo_token_secret`, required.
 * `NGO_SECURE_COOKIES` is the value of `$ngo_secure_cookies`.
+* `NGO_HTTP_ONLY_COOKIES` is the value of `$ngo_http_only_cookies`.
 * `NGO_EXTRA_VALIDITY` is the value of `$ngo_extra_validity`.
 * `NGO_DOMAIN` is the value of `$ngo_domain`.
 * `NGO_WHITELIST` is the value of `$ngo_whitelist`.

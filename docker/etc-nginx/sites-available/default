@@ -22,19 +22,20 @@ server {
       end
     ';
 
-    set_by_lua $ngo_callback_scheme 'return os.getenv("NGO_CALLBACK_SCHEME")';
-    set_by_lua $ngo_callback_uri    'return os.getenv("NGO_CALLBACK_URI")';
-    set_by_lua $ngo_signout_uri     'return os.getenv("NGO_SIGNOUT_URI")';
-    set_by_lua $ngo_client_id       'return os.getenv("NGO_CLIENT_ID")';
-    set_by_lua $ngo_client_secret   'return os.getenv("NGO_CLIENT_SECRET")';
-    set_by_lua $ngo_token_secret    'return os.getenv("NGO_TOKEN_SECRET")';
-    set_by_lua $ngo_secure_cookies  'return os.getenv("NGO_SECURE_COOKIES")';
-    set_by_lua $ngo_extra_validity  'return os.getenv("NGO_EXTRA_VALIDITY")';
-    set_by_lua $ngo_domain          'return os.getenv("NGO_DOMAIN")';
-    set_by_lua $ngo_whitelist       'return os.getenv("NGO_WHITELIST")';
-    set_by_lua $ngo_blacklist       'return os.getenv("NGO_BLACKLIST")';
-    set_by_lua $ngo_user            'return os.getenv("NGO_USER")';
-    set_by_lua $ngo_email_as_user   'return os.getenv("NGO_EMAIL_AS_USER")';
+    set_by_lua $ngo_callback_scheme    'return os.getenv("NGO_CALLBACK_SCHEME")';
+    set_by_lua $ngo_callback_uri       'return os.getenv("NGO_CALLBACK_URI")';
+    set_by_lua $ngo_signout_uri        'return os.getenv("NGO_SIGNOUT_URI")';
+    set_by_lua $ngo_client_id          'return os.getenv("NGO_CLIENT_ID")';
+    set_by_lua $ngo_client_secret      'return os.getenv("NGO_CLIENT_SECRET")';
+    set_by_lua $ngo_token_secret       'return os.getenv("NGO_TOKEN_SECRET")';
+    set_by_lua $ngo_secure_cookies     'return os.getenv("NGO_SECURE_COOKIES")';
+    set_by_lua $ngo_http_only_cookies  'return os.getenv("NGO_HTTP_ONLY_COOKIES")';
+    set_by_lua $ngo_extra_validity     'return os.getenv("NGO_EXTRA_VALIDITY")';
+    set_by_lua $ngo_domain             'return os.getenv("NGO_DOMAIN")';
+    set_by_lua $ngo_whitelist          'return os.getenv("NGO_WHITELIST")';
+    set_by_lua $ngo_blacklist          'return os.getenv("NGO_BLACKLIST")';
+    set_by_lua $ngo_user               'return os.getenv("NGO_USER")';
+    set_by_lua $ngo_email_as_user      'return os.getenv("NGO_EMAIL_AS_USER")';
 
     access_by_lua_file "/etc/nginx/lua/nginx-google-oauth/access.lua";
 

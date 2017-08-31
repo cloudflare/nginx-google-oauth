@@ -8,22 +8,23 @@ local uri         = ngx.var.uri
 local uri_args    = ngx.req.get_uri_args()
 local scheme      = ngx.var.scheme
 
-local client_id      = ngx.var.ngo_client_id
-local client_secret  = ngx.var.ngo_client_secret
-local token_secret   = ngx.var.ngo_token_secret
-local domain         = ngx.var.ngo_domain
-local cb_scheme      = ngx.var.ngo_callback_scheme or scheme
-local cb_server_name = ngx.var.ngo_callback_host
-local cb_uri         = ngx.var.ngo_callback_uri or "/_oauth"
-local cb_url         = cb_scheme .. "://" .. cb_server_name .. cb_uri
-local redirect_url   = cb_scheme .. "://" .. cb_server_name .. ngx.var.request_uri
-local signout_uri    = ngx.var.ngo_signout_uri or "/_signout"
-local extra_validity = tonumber(ngx.var.ngo_extra_validity or "0")
-local whitelist      = ngx.var.ngo_whitelist or ""
-local blacklist      = ngx.var.ngo_blacklist or ""
-local secure_cookies = ngx.var.ngo_secure_cookies == "true" or false
-local set_user       = ngx.var.ngo_user or false
-local email_as_user  = ngx.var.ngo_email_as_user == "true" or false
+local client_id         = ngx.var.ngo_client_id
+local client_secret     = ngx.var.ngo_client_secret
+local token_secret      = ngx.var.ngo_token_secret
+local domain            = ngx.var.ngo_domain
+local cb_scheme         = ngx.var.ngo_callback_scheme or scheme
+local cb_server_name    = ngx.var.ngo_callback_host
+local cb_uri            = ngx.var.ngo_callback_uri or "/_oauth"
+local cb_url            = cb_scheme .. "://" .. cb_server_name .. cb_uri
+local redirect_url      = cb_scheme .. "://" .. cb_server_name .. ngx.var.request_uri
+local signout_uri       = ngx.var.ngo_signout_uri or "/_signout"
+local extra_validity    = tonumber(ngx.var.ngo_extra_validity or "0")
+local whitelist         = ngx.var.ngo_whitelist or ""
+local blacklist         = ngx.var.ngo_blacklist or ""
+local secure_cookies    = ngx.var.ngo_secure_cookies == "true" or false
+local http_only_cookies = ngx.var.ngo_http_only_cookies == "true" or false
+local set_user          = ngx.var.ngo_user or false
+local email_as_user     = ngx.var.ngo_email_as_user == "true" or false
 
 if whitelist:len() == 0 then
   whitelist = nil
@@ -214,6 +215,9 @@ local function authorize()
   local cookie_tail  = ";version=1;path=/;Max-Age=" .. expires
   if secure_cookies then
     cookie_tail = cookie_tail .. ";secure"
+  end
+  if http_only_cookies then
+    cookie_tail = cookie_tail .. ";httponly"
   end
 
   local email      = profile["email"]
