@@ -58,25 +58,21 @@ local function handle_token_uris(email, token, expires)
   end
 end
 
-
-local function on_auth(email, token, expires)
+local function check_domain(email,whitelist)
   local oauth_domain = email:match("[^@]+@(.+)")
-
-  if not (whitelist or blacklist) then
-    if domain:len() ~= 0 then
-      if not string.find(" " .. domain .. " ", " " .. oauth_domain .. " ", 1, true) then
+  if domain:len() ~= 0 then
+    if not string.find(" " .. domain .. " ", " " .. oauth_domain .. " ", 1, true) then
+      if whitelist ==  1 then
+        ngx.log(ngx.ERR, email .. " is not on " .. domain .. " nor in the whitelist" )
+      else
         ngx.log(ngx.ERR, email .. " is not on " .. domain)
-        return ngx.exit(ngx.HTTP_FORBIDDEN)
       end
-    end
-  end
-
-  if whitelist then
-    if not string.find(" " .. whitelist .. " ", " " .. email .. " ", 1, true) then
-      ngx.log(ngx.ERR, email .. " is not in whitelist")
       return ngx.exit(ngx.HTTP_FORBIDDEN)
     end
   end
+end
+
+local function on_auth(email, token, expires)
 
   if blacklist then
     if string.find(" " .. blacklist .. " ", " " .. email .. " ", 1, true) then
@@ -84,6 +80,15 @@ local function on_auth(email, token, expires)
       return ngx.exit(ngx.HTTP_FORBIDDEN)
     end
   end
+
+  if whitelist then
+    if not string.find(" " .. whitelist .. " ", " " .. email .. " ", 1, true) then
+      check_domain(email,1)
+    end
+  else
+    check_domain(email,0)
+  end
+
 
   if set_user then
     if email_as_user then
@@ -245,4 +250,9 @@ handle_signout()
 
 if not is_authorized() then
   authorize()
+end
+
+-- if already authenticated, but still receives a /_oauth request, redirect to the correct destination
+if uri == "/_oauth" then
+  return ngx.redirect(uri_args["state"])
 end
