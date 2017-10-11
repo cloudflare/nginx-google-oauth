@@ -250,3 +250,4 @@ end
 -- if already authenticated, but still receives a /_oauth request, redirect to the correct destination
 if uri == "/_oauth" then
   return ngx.redirect(uri_args["state"])
+end
