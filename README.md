@@ -65,6 +65,32 @@ variables are:
   returned from Google (portion left of '@' in email).
 - **$ngo_email_as_user** If set and `$ngo_user` is defined, username
   returned will be full email address.
+- **$ngo_email** Optional, boolean. If set to true, it will be populated with
+  the OAuth email returned from Google.
+- **$ngo_name** Optional, boolean. If set to true, it will be populated with
+  the OAuth name returned from Google.
+- **$ngo_groups** Optional, boolean. If set to true, it will be populated with
+  the Google Directory Groups of which the user is a member, within the Google
+  Suite domain defined in variable **$ngo_groups_domain**.
+  Requires the definition of **$ngo_service_account_json_file**,
+  **$ngo_organization_admin_email** and **$ngo_groups_domain**.
+- **$ngo_allowed_groups** Optional, space separated list of email addresses of
+  Google Directory Groups. If set, will be used for access control, so that
+  only members of the defined groups will be authorized.
+  Requires the definition of **$ngo_service_account_json_file**,
+  **$ngo_organization_admin_email** and **$ngo_groups_domain**.
+- **$ngo_service_account_json_file** Optional, path to JSON credentials file of the Google Service Account which has been granted domain-wide-delegation of the Google Suite Domain.
+Please follow the [official documentation](https://developers.google.com/admin-sdk/directory/v1/guides/delegation) to setup Google Suite Domain-Wide Delegation of Authority and define at least the following scopes:
+```
+https://www.googleapis.com/auth/admin.directory.user.readonly
+https://www.googleapis.com/auth/admin.directory.group.readonly
+https://www.googleapis.com/auth/admin.directory.group.member.readonly
+```
+- **$ngo_organization_admin_email** Optional, the email of a Google Suite
+  administrator account. The Service Account will impersonate this user to
+  access Google Directory API.
+- **ngo_groups_domain** Optional, the domain of the Google Suite account where
+  groups are fetched from.
 
 ## Available endpoints
 
@@ -80,6 +106,8 @@ Endpoint that reports your OAuth token in a JSON object:
 ```json
 {
   "email": "foo@example.com",
+  "name": "Foo Name",
+  "groups": "group1@example.com group2@example.com",
   "token": "abc..xyz",
   "expires": 1445455680
 }
@@ -91,6 +119,8 @@ Endpoint that reports your OAuth token in text format:
 
 ```
 email: foo@example.com
+name: Foo Name
+groups: group1@example.com group2@example.com
 token: abc..xyz
 expires: 1445455680
 ```
@@ -100,7 +130,7 @@ expires: 1445455680
 Endpoint that reports your OAuth token as `curl` arguments for header auth:
 
 ```
--H "OauthEmail: foo@example.com" -H "OauthAccessToken: abc..xyz" -H "OauthExpires: 1445455680"
+-H "OauthEmail: foo@example.com" -H "OauthName: Foo Name" -H "OauthGroups: group1@example.com group2@example.com" -H "OauthAccessToken: abc..xyz" -H "OauthExpires: 1445455680"
 ```
 
 You can add it to your `curl` command to make it work with OAuth.
