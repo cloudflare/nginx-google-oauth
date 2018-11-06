@@ -70,6 +70,8 @@ local function check_domain(email, whitelist_failed)
       end
       return ngx.exit(ngx.HTTP_FORBIDDEN)
     end
+  elseif whitelist_failed then
+    return ngx.exit(ngx.HTTP_FORBIDDEN)
   end
 end
 
