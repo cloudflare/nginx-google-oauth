@@ -25,6 +25,8 @@ local secure_cookies    = ngx.var.ngo_secure_cookies == "true" or false
 local http_only_cookies = ngx.var.ngo_http_only_cookies == "true" or false
 local set_user          = ngx.var.ngo_user or false
 local email_as_user     = ngx.var.ngo_email_as_user == "true" or false
+local cookie_domain     = ngx.var.ngo_cookie_domain or ""
+local ignore_uri        = ngx.var.ngo_ignore_uri or ""
 
 if whitelist:len() == 0 then
   whitelist = nil
@@ -155,6 +157,10 @@ local function request_profile(token)
 end
 
 local function is_authorized()
+  if uri:sub(1, #ignore_uri) == ignore_uri then
+    return true
+  end
+
   local headers = ngx.req.get_headers()
 
   local expires = tonumber(ngx.var.cookie_OauthExpires) or 0
@@ -224,6 +230,9 @@ local function authorize()
   end
   if http_only_cookies then
     cookie_tail = cookie_tail .. ";httponly"
+  end
+  if cookie_domain ~= "" then
+    cookie_tail = cookie_tail .. ";Domain=" .. cookie_domain
   end
 
   local email      = profile["email"]

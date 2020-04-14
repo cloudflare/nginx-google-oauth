@@ -71,6 +71,10 @@ variables are:
   returned from Google (portion left of '@' in email).
 - **$ngo_email_as_user** If set and `$ngo_user` is defined, username
   returned will be full email address.
+- **$ngo_cookie_domain** If defined, the chosen domain will be added to the
+  cookies, this can be useful for granting access to multiple subdomains.
+- **$ngo_ignore_uri** If defined, URIs containing this prefix will bypass
+  authentication.
 
 ## Available endpoints
 
