@@ -11,6 +11,8 @@ server {
     lua_ssl_trusted_certificate /etc/ssl/certs/ca-certificates.crt;
     lua_ssl_verify_depth        5;
 
+    server_tokens off;
+
     error_log /dev/stderr notice;
     access_log /dev/stdout;
 
